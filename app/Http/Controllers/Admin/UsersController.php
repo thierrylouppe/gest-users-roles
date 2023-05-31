@@ -8,12 +8,18 @@ use Illuminate\Http\Request;
 
 class UsersController extends Controller
 {
+    // Fonction constructrice pour verifier si le User est auth 
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $users = User::all();
+        return view('admin.users.index')->with('users', $users);
     }
 
     /**
