@@ -42,4 +42,23 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
+
+    //Verifie l'ensemble des roles de l'utisateur s'il est admin la function return TRUE
+    public function isAdmin()
+    {
+        return $this->roles()->where('name', 'admin')->first();
+    }
+
+    //Verifie l'ensemble des roles de l'utisateur s'il est contient un des roles la function return TRUE
+    public function hasAnyRole(array $roles)
+    {
+        return $this->roles()->whereIn('name', $roles)->first();
+    }
+
+
 }
